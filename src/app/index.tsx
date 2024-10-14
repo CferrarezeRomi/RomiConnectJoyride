@@ -1,16 +1,15 @@
-import styled from "styled-components"
-import Header from "../components/header"
-import Main from "../components/main"
-
-const AppContainer = styled.div`
-`
+import Header from "../components/header";
+import Main from "../components/main";
+import TourGuide from '../components/guide/tourGuide'; 
 
 function App() {
   return (
-    <AppContainer>
-      <Header/>
-      <Main/>
-    </AppContainer>
-  )
+    <>
+      <Header />
+      <Main />
+      <TourGuide /> {/* O tour será sempre renderizado */}
+    </>
+  );
 }
-export default App
+
+export default App;

@@ -8,6 +8,7 @@ interface CardProps {
     title: string;
     text: string;
     color: string;
+    className?: string;
 }
 const CardLinkContainer = styled.a`
     text-decoration: none;
@@ -68,12 +69,14 @@ export const cardData = [
         image: <img src={ImgFab} alt="Logo_Fabrica" />,
         title: "Fábrica",
         text: "Visualize painéis, indicadores e os dados de suas máquinas.",
-        color: "linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.333)) rgb(0, 103, 166);"
+        color: "linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.333)) rgb(0, 103, 166);",
+        className: "card-fabrica"
     },
     {   image: <img src={ImgRent} alt="Logo_Locacao" />,
         title: "Locação",
         text: "Monitore a utilização e informações relevantes do aluguel.",
-        color: "linear-gradient(180deg, #00AE06 0%, #0D6E10 100%) 0% 0% no-repeat padding-box;"
+        color: "linear-gradient(180deg, #00AE06 0%, #0D6E10 100%) 0% 0% no-repeat padding-box;",
+        className: "card-locacao"
     },
     {
         image: <img src={ImgInsta} alt="Logo_Instalador" />,
@@ -82,9 +85,9 @@ export const cardData = [
         color: "linear-gradient(180deg, #59009E 0%, #36065B 100%) 0% 0% no-repeat padding-box;"
     }
 ]
-function Card ({image, title, text, color}: CardProps) {
+function Card ({image, title, text, color, className}: CardProps) {
     return (
-            <CardLinkContainer>
+            <CardLinkContainer className={`${className}`}>
                 <CardContainer>
                     <CardImgContaider color={`${color}`}>
                         {image}

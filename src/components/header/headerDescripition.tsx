@@ -53,8 +53,8 @@ function HeaderDescripition(){
     return(
         <HeaderDescription>
                 <DescriptionVersion>v_prod-b4ae026</DescriptionVersion>
-                <img src={NotificationsIcon} />
-                <DescriptionUser>
+                <img src={NotificationsIcon} className="img"/>
+                <DescriptionUser className="user">
                     <UserIcon>CF</UserIcon>
                     <UserName>Caio Ferrareze</UserName>
                 </DescriptionUser>

@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import LogoImg from "../../assets/logo_romi_connect-e5022712.svg"
+// import LogoPulse from "../../assets/LOGO-ROMI-PULSE-AZUL.svg"
 
 const LogoContainer = styled.div`
 `
 const Logo = styled.img`
     width: 950px;
-    margin: 4rem 0;
+    margin: 4rem 0
 `
 function LogoMain (){
     return(
