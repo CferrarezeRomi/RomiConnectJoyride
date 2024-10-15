@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import ImgFab from "../../assets/Logo_fabrica.svg"
 import ImgRent from "../../assets/Logo_locacao.svg"
-import ImgInsta from "../../assets/Logo_instalador.svg"
 
 interface CardProps {
     image: React.ReactNode; 
