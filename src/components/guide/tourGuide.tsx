@@ -1,55 +1,60 @@
 import { useEffect, useState } from 'react';
 import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
-import './style.css'; // Certifique-se de que este arquivo contém os estilos de hover
+import Background from "../../assets/background-romi.svg"
+import RomiLogo from "../../assets/LOGO-ROMI-PULSE-AZUL 1.svg"
 
 const TourGuide = () => {
   const [run, setRun] = useState(false); // Controla se o tour está rodando
   const [steps] = useState<Step[]>([
     {
-        target: 'body',
-        content: (
-          <div>
-            <h2 className="joyride-title" style={{color:'#4682b4'}}>Bem-vindo ao Romi Pulse!</h2>
-            <p>Aprenda a utilizar a plataforma de Indústria 4.0 da Romi S.A.</p>
-          </div>
-        ),
-        placement: 'center',
-      },
-      {
-        target: '.cards-container',
-        content: 'Ao entrar na plataforma, a tela principal estará organizada em seções distintas.',
-        placement: 'bottom',
-      },
-      {
-        target: '.card-fabrica',
-        content: 'No módulo Fábrica, veja gráficos interativos e dados detalhados das suas máquinas para uma gestão eficaz.',
-        placement: 'bottom',
-      },
-      {
-        target: '.card-locacao',
-        content: 'No módulo Locação, monitore o uso dos equipamentos alugados e visualize sua disponibilidade para uma gestão eficiente.',
-        placement: 'bottom',
-      },
-      {
-        target: '.img',
-        content: 'O ícone de Notificações aparece para comunicados ou alertas importantes. Clique nele para acessar as mensagens.',
-        placement: 'bottom',
-      },
-      {
-        target: '.user',
-        content: 'Clique no ícone de Usuário para sair da sua conta.',
-        placement: 'bottom',
-      },
-      {
-        target: 'body',
-        content: 'Agora que você conhece os principais recursos, sinta-se à vontade para explorar a plataforma e aproveitar as ferramentas disponíveis.',
-        placement: 'center',
-      }
+      target: 'body',
+      content: (
+        <div>
+          <img src={RomiLogo} alt="" />
+          <p>Bem-vindo! Aprenda a utilizar a plataforma de Indústria 4.0 da Romi S.A.</p>
+        </div>
+      ),
+      placement: 'center',
+    },
+    {
+      target: '.cards-container',
+      content: 'Ao entrar na plataforma, a tela principal estará organizada em seções distintas.',
+      placement: 'bottom',
+    },
+    {
+      target: '.card-fabrica',
+      content: 'Módulo Fábrica, veja gráficos interativos e dados detalhados das suas máquinas para uma gestão eficaz.',
+      placement: 'bottom',
+    },
+    {
+      target: '.card-locacao',
+      content: 'Módulo Locação, monitore o uso dos equipamentos alugados e visualize sua disponibilidade para uma gestão eficiente.',
+      placement: 'bottom',
+    },
+    {
+      target: '.img',
+      content: 'O ícone de Notificações mostra comunicados ou alertas importantes. Clique nele para acessar as mensagens.',
+      placement: 'bottom',
+    },
+    {
+      target: '.user',
+      content: 'Ao clicar no ícone de Usuário você terá a opção de sair da sua conta.',
+      placement: 'bottom',
+    },
+    {
+      target: 'body',
+      content:'Agora que você conhece os principais recursos, sinta-se à vontade para explorar a plataforma e aproveitar as ferramentas disponíveis.',
+      placement: 'center',
+    }
   ]);
 
   useEffect(() => {
-    setRun(true); // Inicia o tour automaticamente quando o componente é montado
-  }, []);
+  const timer = setTimeout(() => {
+    setRun(true); // Inicia o tour após 3 segundos
+  }, 3000); // 3000 milissegundos = 3 segundos
+
+  return () => clearTimeout(timer); // Limpa o timer se o componente for desmontado
+}, []);
 
   const handleTourCallback = (data: CallBackProps) => {
     const { status } = data;
@@ -92,12 +97,13 @@ const TourGuide = () => {
                 paddingTop: 10,
                 paddingLeft: 20,
                 paddingRight: 20,
+                fontWeight: 600,
             },
             buttonBack: {
                 color: '#4682b4', 
-                border: '2px solid #4682b4', 
-                borderRadius: '4px', 
                 marginRight: 10, 
+                fontWeight: 500,
+
             },
             buttonSkip: {
                 color: '#bababa', 
@@ -105,18 +111,22 @@ const TourGuide = () => {
                 display: 'flex',
                 justifyContent: 'flex-start',
                 marginLeft: 20,
+                
             },
             tooltip: {
-                border: '2px solid #0067a6', // Borda do modal
-                borderRadius: '4px', // Borda arredondada no modal
-                textAlign: 'center', // Alinhamento do texto
+              border: '2px solid #0067a6', // Borda do modal
+              borderRadius: '24px', // Borda arredondada no modal
+              textAlign: 'center', // Alinhamento do texto
+              fontWeight: 500,
+              fontSize: 19,
+              backgroundImage: `url(${Background})`, // Define a imagem de fundo
+              backgroundSize: 'cover', // Faz com que a imagem cubra todo o modal
+              backgroundPosition: 'center', // Centraliza a imagem
+              color: '#000', // Cor do texto sobre a imagem
             },
             tooltipContent: {
-                padding: '15px', // Espaçamento interno no conteúdo do modal 
+                // padding: '15px', // Espaçamento interno no conteúdo do modal 
             },
-            beacon: {
-                display: 'none', // Remove completamente o beacon
-              },
         }}
     />
   );
