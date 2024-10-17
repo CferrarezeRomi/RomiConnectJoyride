@@ -1,7 +1,25 @@
 import { useEffect, useState } from 'react';
 import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
-import Background from "../../assets/background-romi.svg"
-import RomiLogo from "../../assets/LOGO-ROMI-PULSE-AZUL 1.svg"
+import Background from "../../assets/background-romi.svg";
+import RomiLogo from "../../assets/LOGO-ROMI-PULSE-AZUL 1.svg";
+
+// Declaração global para o gtag no window
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
+// Função para disparar o evento no GA4
+const sendAnalyticsEvent = () => {
+  if (window.gtag) {
+    window.gtag('event', 'finished_guide', {
+      event_category: 'Tour',
+      event_label: 'Guide Completed',
+      value: 1,
+    });
+  }
+};
 
 const TourGuide = () => {
   const [run, setRun] = useState(false); // Controla se o tour está rodando
@@ -49,85 +67,84 @@ const TourGuide = () => {
   ]);
 
   useEffect(() => {
-  const timer = setTimeout(() => {
-    setRun(true); // Inicia o tour após 3 segundos
-  }, 3000); // 3000 milissegundos = 3 segundos
+    const timer = setTimeout(() => {
+      setRun(true); // Inicia o tour após 3 segundos
+    }, 3000); // 3000 milissegundos = 3 segundos
 
-  return () => clearTimeout(timer); // Limpa o timer se o componente for desmontado
-}, []);
+    return () => clearTimeout(timer); // Limpa o timer se o componente for desmontado
+  }, []);
 
   const handleTourCallback = (data: CallBackProps) => {
     const { status } = data;
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
     if (finishedStatuses.includes(status)) {
-        setRun(false); // Finaliza o tour
+      setRun(false); // Finaliza o tour
+      sendAnalyticsEvent(); // Dispara o evento para o Google Analytics
     }
   };
 
   return (
     <Joyride
-        steps={steps}
-        run={run}
-        continuous
-        scrollToFirstStep
-        //showProgress // Mostra o progresso no botão
-        showSkipButton
-        hideCloseButton
-        callback={handleTourCallback}
-        locale={{ // Texto para botões
-            back: 'Voltar', 
-            close: 'Fechar', 
-            last: 'Finalizar', 
-            next: 'Próximo', 
-            skip: 'Pular', 
-        }}
-        styles={{
-            options: {
-                arrowColor: '#0067a6', // Cor da seta
-                backgroundColor: '#fff', // Cor de fundo do modal
-                overlayColor: 'rgba(0, 0, 0, 0.6)', // Cor do overlay (fundo escuro ao redor do foco)
-                textColor: '#000', // Cor do texto
-                width: 500, // Largura do modal
-                zIndex: 1000, // Controle da ordem de empilhamento
-            },
-            buttonNext: {
-                backgroundColor: '#4682b4', 
-                color: '#fff', 
-                paddingBottom: 10,
-                paddingTop: 10,
-                paddingLeft: 20,
-                paddingRight: 20,
-                fontWeight: 600,
-            },
-            buttonBack: {
-                color: '#4682b4', 
-                marginRight: 10, 
-                fontWeight: 500,
-
-            },
-            buttonSkip: {
-                color: '#bababa', 
-                fontWeight: 500,
-                display: 'flex',
-                justifyContent: 'flex-start',
-                marginLeft: 20,
-                
-            },
-            tooltip: {
-              border: '2px solid #0067a6', // Borda do modal
-              borderRadius: '24px', // Borda arredondada no modal
-              textAlign: 'center', // Alinhamento do texto
-              fontWeight: 500,
-              fontSize: 19,
-              backgroundImage: `url(${Background})`, // Define a imagem de fundo
-              backgroundSize: 'cover', // Faz com que a imagem cubra todo o modal
-              backgroundPosition: 'center', // Centraliza a imagem
-              color: '#000', // Cor do texto sobre a imagem
-            },
-            tooltipContent: {
-                // padding: '15px', // Espaçamento interno no conteúdo do modal 
-            },
-        }}
+      steps={steps}
+      run={run}
+      continuous
+      scrollToFirstStep
+      // showProgress // Mostra o progresso no botão
+      showSkipButton
+      hideCloseButton
+      callback={handleTourCallback}
+      locale={{ // Texto para botões
+        back: 'Voltar', 
+        close: 'Fechar', 
+        last: 'Finalizar', 
+        next: 'Próximo', 
+        skip: 'Pular', 
+      }}
+      styles={{
+        options: {
+          arrowColor: '#0067a6', // Cor da seta
+          backgroundColor: '#fff', // Cor de fundo do modal
+          overlayColor: 'rgba(0, 0, 0, 0.6)', // Cor do overlay (fundo escuro ao redor do foco)
+          textColor: '#000', // Cor do texto
+          width: 500, // Largura do modal
+          zIndex: 1000, // Controle da ordem de empilhamento
+        },
+        buttonNext: {
+          backgroundColor: '#4682b4', 
+          color: '#fff', 
+          paddingBottom: 10,
+          paddingTop: 10,
+          paddingLeft: 20,
+          paddingRight: 20,
+          fontWeight: 600,
+        },
+        buttonBack: {
+          color: '#4682b4', 
+          marginRight: 10, 
+          fontWeight: 500,
+        },
+        buttonSkip: {
+          color: '#bababa', 
+          fontWeight: 500,
+          display: 'flex',
+          justifyContent: 'flex-start',
+          marginLeft: 20,
+        },
+        tooltip: {
+          border: '2px solid #0067a6', // Borda do modal
+          borderRadius: '24px', // Borda arredondada no modal
+          textAlign: 'center', // Alinhamento do texto
+          fontWeight: 500,
+          fontSize: 19,
+          backgroundImage: `url(${Background})`, // Define a imagem de fundo
+          backgroundSize: 'cover', // Faz com que a imagem cubra todo o modal
+          backgroundPosition: 'center', // Centraliza a imagem
+          color: '#000', // Cor do texto sobre a imagem
+        },
+        tooltipContent: {
+          // padding: '15px', // Espaçamento interno no conteúdo do modal 
+        },
+      }}
     />
   );
 };
