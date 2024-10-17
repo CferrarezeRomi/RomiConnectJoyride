@@ -3,23 +3,6 @@ import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import Background from "../../assets/background-romi.svg";
 import RomiLogo from "../../assets/LOGO-ROMI-PULSE-AZUL 1.svg";
 
-// Declaração global para o gtag no window
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-  }
-}
-
-// Função para disparar o evento no GA4
-const sendAnalyticsEvent = () => {
-  if (window.gtag) {
-    window.gtag('event', 'finished_guide', {
-      event_category: 'Tour',
-      event_label: 'Guide Completed',
-      value: 1,
-    });
-  }
-};
 
 const TourGuide = () => {
   const [run, setRun] = useState(false); // Controla se o tour está rodando
@@ -79,7 +62,7 @@ const TourGuide = () => {
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
     if (finishedStatuses.includes(status)) {
       setRun(false); // Finaliza o tour
-      sendAnalyticsEvent(); // Dispara o evento para o Google Analytics
+
     }
   };
 
